@@ -1,11 +1,14 @@
 import tensorflow as tf
+import numpy as np
 print(tf.sysconfig.get_include())
 print(tf.sysconfig.get_lib())
+# g++ -std=c++11 -shared -o kernel_example.so kernel_example.cc kernel_example.cu.o ${TF_CFLAGS[@]} -fPIC -lcudart ${TF_LFLAGS[@]} -L /usr/local/cuda/lib64/ -l:libtensorflow_framework.so.2
 
 #test how to build and use the self creating ops in tensorflow2.4 with ncc g++ ..crossing building tool
-zero_out_module_gpu = tf.load_op_library('/root/eclipse-workspace_lf/ROI_tf_lf/kernel_example.so')
-print("in gpu:",zero_out_module_gpu.example([[1, 2], [3, 4]]))
-
+with tf.device('gpu'):
+   zero_out_module_gpu = tf.load_op_library('/root/eclipse-workspace_lf/ROI_tf_lf/kernel_example.so')
+   a=3*10*10
+   print("in gpu:",zero_out_module_gpu.example(np.reshape(np.arange(a).astype(np.float32),newshape=(3,10,10))))
 zero_out_module_cpu = tf.load_op_library('/root/eclipse-workspace_lf/ZeroOut/zero_out.so')
 print("in cpu:",zero_out_module_cpu.zero_out([[1.0, 2.0], [3.0, 4.0]]))
 
