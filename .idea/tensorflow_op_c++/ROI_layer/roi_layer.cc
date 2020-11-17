@@ -1,4 +1,5 @@
-#include "kernel_example.h"
+#include "roi_layer.h"
+
 #include "tensorflow/core/framework/op_kernel.h"
 
 using namespace tensorflow;
@@ -6,7 +7,7 @@ using namespace tensorflow;
 using CPUDevice = Eigen::ThreadPoolDevice;
 using GPUDevice = Eigen::GpuDevice;
 
-REGISTER_OP("Example")
+REGISTER_OP("RoiLayer")
 .Attr("T:{float}")
 .Attr("shape_pool:shape = { dim { size: 7 } dim { size: 7 } }") //pooled_H and pool_W
 .Attr("spatial_scale:float = 0.0625") //0.0625 # 1/16
@@ -30,9 +31,9 @@ struct ExampleFunctor<CPUDevice, T> {
 // OpKernel definition.
 // template parameter <T> is the datatype of the tensors.
 template <typename Device, typename T>
-class ExampleOp : public OpKernel {
+class RoiLayerOp : public OpKernel {
  public:
-  explicit ExampleOp(OpKernelConstruction* context) : OpKernel(context) {
+  explicit  RoiLayerOp(OpKernelConstruction* context) : OpKernel(context) {
 	    // Get the index of the value to preserve
 	    OP_REQUIRES_OK(context,
 	                   context->GetAttr("spatial_scale", &spatial_scale_));
@@ -124,8 +125,8 @@ class ExampleOp : public OpKernel {
 //Register the CPU kernels.
 #define REGISTER_CPU(T)                                          \
   REGISTER_KERNEL_BUILDER(                                       \
-      Name("Example").Device(DEVICE_CPU).TypeConstraint<T>("T"), \
-      ExampleOp<CPUDevice, T>);
+      Name("RoiLayer").Device(DEVICE_CPU).TypeConstraint<T>("T"), \
+	  RoiLayerOp<CPUDevice, T>);
 REGISTER_CPU(float);
 //REGISTER_CPU(double);
 
@@ -135,8 +136,8 @@ REGISTER_CPU(float);
   /* Declare explicit instantiations in kernel_example.cu.cc. */ \
   extern template class ExampleFunctor<GPUDevice, T>;            \
   REGISTER_KERNEL_BUILDER(                                       \
-      Name("Example").Device(DEVICE_GPU).TypeConstraint<T>("T"), \
-      ExampleOp<GPUDevice, T>);
+      Name("RoiLayer").Device(DEVICE_GPU).TypeConstraint<T>("T"), \
+	  RoiLayerOp<GPUDevice, T>);
 REGISTER_GPU(float);
 //REGISTER_GPU(double);
 #endif  // GOOGLE_CUDA

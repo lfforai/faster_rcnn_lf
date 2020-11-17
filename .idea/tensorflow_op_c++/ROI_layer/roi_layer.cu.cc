@@ -1,10 +1,11 @@
 // kernel_example.cu.cc
 #pragma once
+
 #ifdef GOOGLE_CUDA
 #define EIGEN_USE_GPU
-#include "kernel_example.h"
+#include "roi_layer.h"
 #include "tensorflow/core/util/gpu_kernel_helper.h"
-#include "simpleTexture3D_kernel.h"
+#include "roi_layer_Texture3D.h"
 
 using namespace tensorflow;
 

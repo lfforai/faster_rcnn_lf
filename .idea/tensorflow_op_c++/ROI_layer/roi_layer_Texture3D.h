@@ -6,8 +6,8 @@
  */
 #pragma once
 
-#ifndef SIMPLETEXTURE3D_KERNEL_H_
-#define SIMPLETEXTURE3D_KERNEL_H_
+#ifndef ROI_LAYER_TEXTURE3D_H_
+#define ROI_LAYER_TEXTURE3D_H_
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -34,4 +34,4 @@ cudaTextureObject_t& initCuda(int num_Array,const float *h_volume, cudaExtent vo
 extern "C"
 void cleanupCuda(cudaTextureObject_t& tex,int num_Array);
 
-#endif /* SIMPLETEXTURE3D_KERNEL_H_ */
+#endif /* ROI_LAYER_TEXTURE3D_H_ */

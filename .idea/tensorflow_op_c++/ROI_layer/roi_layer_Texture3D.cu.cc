@@ -12,7 +12,7 @@
 #ifndef _SIMPLETEXTURE3D_KERNEL_CU_
 #define _SIMPLETEXTURE3D_KERNEL_CU_
 
-#include "simpleTexture3D_kernel.h"
+#include "roi_layer_Texture3D.h"
 
 typedef unsigned int  uint;
 typedef unsigned char uchar;

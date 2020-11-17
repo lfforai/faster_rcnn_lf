@@ -18,13 +18,13 @@ def jx(num):
     return return_list
 
 with tf.device('gpu'):
-   zero_out_module_gpu = tf.load_op_library('/root/eclipse-workspace/ROI_layer/kernel_example.so')
+   zero_out_module_gpu = tf.load_op_library('/root/eclipse-workspace/ROI_layer/roi_layer.so')
    a=1*3*100*100
    b=100
    b=np.array(jx(b))
    # print(b)
    # print(np.reshape(np.arange(a).astype(np.float32),newshape=(1,3,10,10)))
-   output0,output1=zero_out_module_gpu.example(np.reshape(np.arange(a).astype(np.float32),newshape=(1,3,100,100)),
+   output0,output1=zero_out_module_gpu.roi_layer(np.reshape(np.arange(a).astype(np.float32),newshape=(1,3,100,100)),
                                np.reshape(b.astype(np.float32),newshape=(100,4)))
    # print("in gpu:",output1)
    print("in gpu",output0)
@@ -35,6 +35,8 @@ print("in cpu:",zero_out_module_cpu.zero_out([[1.0, 2.0], [3.0, 4.0]]))
 from tensorflow.python.framework import ops
 from tensorflow.python.ops import array_ops
 from tensorflow.python.ops import sparse_ops
+
+
 
 #basetest
 @ops.RegisterGradient("ZeroOut")

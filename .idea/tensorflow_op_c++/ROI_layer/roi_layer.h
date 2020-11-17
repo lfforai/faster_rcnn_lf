@@ -5,8 +5,8 @@
  *      Author: root
  */
 #pragma once
-#ifndef KERNEL_EXAMPLE_H_
-#define KERNEL_EXAMPLE_H_
+#ifndef ROI_LAYER_H_
+#define ROI_LAYER_H_
 
 #include "third_party/eigen3/unsupported/Eigen/CXX11/Tensor"
 #include "tensorflow/core/framework/tensor_types.h"
@@ -28,4 +28,4 @@ struct ExampleFunctor<Eigen::GpuDevice, T> {
 };
 #endif
 
-#endif /* KERNEL_EXAMPLE_H_ */
+#endif /* ROI_LAYER_H_ */
